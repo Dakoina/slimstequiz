@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Slimste Mens - Quiz Overzicht</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c94b4b 0%, #d35400 50%, #c0392b 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .quiz-card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.1);
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .quiz-card:hover::before {
+            opacity: 1;
+        }
+
+        .quiz-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+            transition: transform 0.4s;
+        }
+
+        .quiz-card:hover .quiz-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .quiz-title {
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quiz-description {
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            opacity: 0.9;
+            line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 De Slimste Mens</h1>
+            <p class="subtitle">Kies je quiz ronde</p>
+        </div>
+
+        <div class="quiz-grid">
+            <a href="puzzel.html" class="quiz-card">
+                <span class="quiz-icon">🧩</span>
+                <div class="quiz-title">Puzzel</div>
+                <div class="quiz-description">Los de puzzels op door hints te combineren</div>
+            </a>
+
+            <a href="gallerij.html" class="quiz-card">
+                <span class="quiz-icon">🖼️</span>
+                <div class="quiz-title">De Gallerij</div>
+                <div class="quiz-description">Raad het antwoord aan de hand van afbeeldingen</div>
+            </a>
+
+            <a href="open-deur.html" class="quiz-card">
+                <span class="quiz-icon">🚪</span>
+                <div class="quiz-title">Open Deur</div>
+                <div class="quiz-description">Beantwoord vragen over de getoonde hints</div>
+            </a>
+
+            <a href="collectief-geheugen.html" class="quiz-card">
+                <span class="quiz-icon">🎵</span>
+                <div class="quiz-title">Collectief Geheugen</div>
+                <div class="quiz-description">Verzamel punten door antwoorden te raden</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>Veel succes! 🍀</p>
+        </div>
+    </div>
+</body>
+</html>

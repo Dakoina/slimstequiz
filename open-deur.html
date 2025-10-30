@@ -262,7 +262,7 @@
             const questionText = document.getElementById('question-text');
             const answersGrid = document.getElementById('answers-grid');
 
-            questionText.textContent = `Wat weet je over ${question.subject}?`;
+            questionText.textContent = `${question.subject}?`;
             answersGrid.innerHTML = '';
 
             question.answers.forEach(answer => {

@@ -1,32 +1,32 @@
 [
     {
         "image": "opendeur/hint1.jpg",
-        "subject": "de Eiffeltoren",
+        "subject": "Wat weet je over Assepoester",
         "answers": [
-            "Het is 324 meter hoog",
+            "Pompoen",
             "Het staat in Parijs",
             "Het werd gebouwd in 1889",
             "Het was bedoeld als tijdelijk bouwwerk"
         ]
     },
     {
-        "image": "https://example.com/hint2.jpg",
-        "subject": "Albert Einstein",
+        "image": "opendeur/hint2.jpg",
+        "subject": "Wat zijn de belangrijkste ingrediënten van een pompoentaart, behalve pompoen?",
         "answers": [
-            "Hij won de Nobelprijs in 1921",
-            "Zijn beroemde formule is E=mc²",
-            "Hij speelde viool",
-            "Hij werd geboren in Duitsland"
+            "Suiker",
+            "Eieren",
+            "Pompoenkruiden",
+            "Room / melk"
         ]
     },
     {
-        "image": "https://example.com/hint3.jpg",
-        "subject": "de Mona Lisa",
+        "image": "opendeur/hint3.webp",
+        "subject": "Wat weet je over The Addams Family",
         "answers": [
-            "Het werd geschilderd door Leonardo da Vinci",
-            "Het hangt in het Louvre museum",
-            "Het werd gestolen in 1911",
-            "De vrouw heeft geen wenkbrauwen"
+            "Hand",
+            "Wednesday",
+            "Netflix serie",
+            "Uncle Fester"
         ]
     }
 ]
