@@ -1,0 +1,32 @@
+[
+    {
+        "videoUrl": "https://youtu.be/4V90AmXnguw?si=C4VuKDtgJTKA9vMN&t=79",
+        "answers": [
+            "Michael Jackson",
+            "glove",
+            "thriller",
+            "King of Pop",
+            "zanger"
+        ]
+    },
+    {
+        "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "answers": [
+            "Rick Astley",
+            "Never Gonna Give You Up",
+            "Rickroll",
+            "jaren 80",
+            "dansen"
+        ]
+    },
+    {
+        "videoUrl": "https://www.youtube.com/watch?v=9bZkp7q19f0",
+        "answers": [
+            "PSY",
+            "Gangnam Style",
+            "Korea",
+            "paardendans",
+            "viraal"
+        ]
+    }
+]

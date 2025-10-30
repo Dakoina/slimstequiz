@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Slimste Mens - Open Deur</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c94b4b 0%, #d35400 50%, #c0392b 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .timer.active {
+            opacity: 1;
+        }
+
+        .pictures-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .picture-card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .picture-card:hover:not(.greyed-out) {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .picture-card.selected {
+            box-shadow: 0 0 30px rgba(255,255,255,0.5);
+            transform: scale(1.02);
+        }
+
+        .picture-card.greyed-out {
+            opacity: 0.3;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+        }
+
+        .picture-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .picture-number {
+            padding: 15px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .question-section {
+            background: rgba(0,0,0,0.2);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s;
+        }
+
+        .question-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .question-section h2 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .answer {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 10px;
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.3;
+        }
+
+        .answer:hover {
+            transform: scale(1.02);
+            background: rgba(255,255,255,0.25);
+        }
+
+        .answer.blurred {
+            filter: blur(8px);
+            user-select: none;
+        }
+
+        .answer.revealed {
+            filter: none;
+            font-weight: 800;
+            cursor: default;
+            background: rgba(46, 204, 113, 0.4);
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            font-size: 1.5em;
+            padding: 100px 20px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">00:00</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🚪 De Slimste Mens - Open Deur</h1>
+        </div>
+
+        <div class="pictures-container" id="pictures-container"></div>
+
+        <div class="question-section" id="question-section">
+            <h2 id="question-text"></h2>
+            <div class="answers-grid" id="answers-grid"></div>
+        </div>
+    </div>
+
+    <script>
+        let questions = [];
+        let currentQuestionIndex = null;
+        let timerInterval = null;
+        let startTime = null;
+
+        // Load questions from JSON file
+        async function loadQuestions() {
+            try {
+                console.log('Attempting to load open-deur.json...');
+                const response = await fetch('open-deur.json');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                questions = await response.json();
+                console.log('Questions loaded successfully:', questions);
+                initPictures();
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                document.getElementById('pictures-container').innerHTML = `
+                    <div class="empty-state">
+                        ❌ Fout bij laden van vragen<br>
+                        <small>${error.message}</small><br>
+                        <small>Zorg ervoor dat open-deur.json in dezelfde map staat</small>
+                    </div>
+                `;
+            }
+        }
+
+        function initPictures() {
+            const container = document.getElementById('pictures-container');
+            container.innerHTML = '';
+
+            questions.forEach((question, index) => {
+                const card = document.createElement('div');
+                card.className = 'picture-card';
+                card.onclick = () => selectPicture(index);
+                
+                card.innerHTML = `
+                    <img src="${question.image}" alt="Hint ${index + 1}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23555%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%23fff%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2220%22%3EAfbeelding niet gevonden%3C/text%3E%3C/svg%3E'">
+                    <div class="picture-number">Hint ${index + 1}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function selectPicture(index) {
+            const cards = document.querySelectorAll('.picture-card');
+            
+            // Grey out all cards except selected
+            cards.forEach((card, i) => {
+                if (i === index) {
+                    card.classList.add('selected');
+                    card.classList.remove('greyed-out');
+                } else {
+                    card.classList.remove('selected');
+                    card.classList.add('greyed-out');
+                }
+            });
+
+            currentQuestionIndex = index;
+            showQuestion(index);
+            startTimer();
+        }
+
+        function showQuestion(index) {
+            const question = questions[index];
+            const questionSection = document.getElementById('question-section');
+            const questionText = document.getElementById('question-text');
+            const answersGrid = document.getElementById('answers-grid');
+
+            questionText.textContent = `Wat weet je over ${question.subject}?`;
+            answersGrid.innerHTML = '';
+
+            question.answers.forEach(answer => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer blurred';
+                answerDiv.textContent = answer;
+                answerDiv.onclick = () => revealAnswer(answerDiv);
+                answersGrid.appendChild(answerDiv);
+            });
+
+            questionSection.classList.add('active');
+        }
+
+        function revealAnswer(answerElement) {
+            if (answerElement.classList.contains('revealed')) return;
+            
+            answerElement.classList.remove('blurred');
+            answerElement.classList.add('revealed');
+        }
+
+        function startTimer() {
+            // Reset and start timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            const timerElement = document.getElementById('timer');
+            timerElement.classList.add('active');
+            
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const seconds = (elapsed % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+        }
+
+        // Initialize
+        loadQuestions();
+    </script>
+</body>
+</html>

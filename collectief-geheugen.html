@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Slimste Mens - Collectief Geheugen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c94b4b 0%, #d35400 50%, #c0392b 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .tab:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .tab.active {
+            background: rgba(255,255,255,0.4);
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .quiz-content {
+            display: none;
+        }
+
+        .quiz-content.active {
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            font-size: 1.5em;
+            padding: 100px 20px;
+            opacity: 0.8;
+        }
+
+        .content-layout {
+            display: grid;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (min-width: 1024px) {
+            .content-layout {
+                grid-template-columns: 1.2fr 1fr;
+            }
+        }
+
+        .video-container {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .answers-section {
+            background: rgba(0,0,0,0.2);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .answers-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .answers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .answer-item {
+            background: rgba(255,255,255,0.15);
+            padding: 20px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 70px;
+        }
+
+        .answer-item:hover:not(.revealed) {
+            background: rgba(255,255,255,0.25);
+            transform: translateX(5px);
+        }
+
+        .answer-text {
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .answer-text.blurred {
+            filter: blur(8px);
+            user-select: none;
+        }
+
+        .answer-text.revealed {
+            filter: none;
+            font-weight: 800;
+        }
+
+        .answer-item.revealed {
+            background: rgba(46, 204, 113, 0.4);
+            cursor: default;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .answer-score {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #f39c12;
+            margin-left: 20px;
+            min-width: 60px;
+            text-align: right;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .answer-score.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">00:00</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🎵 De Slimste Mens - Collectief Geheugen</h1>
+        </div>
+
+        <div class="tabs" id="tabs"></div>
+
+        <div id="quiz-container">
+            <div class="empty-state">
+                👆 Klik op een tab om te beginnen
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let quizzes = [];
+        let currentQuizIndex = null;
+        let currentScore = 0;
+        let answersRevealed = 0;
+        let timerInterval = null;
+        let startTime = null;
+
+        // Load quizzes from JSON file
+        async function loadQuizzes() {
+            try {
+                console.log('Attempting to load collectief-geheugen.json...');
+                const response = await fetch('collectief-geheugen.json');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                quizzes = await response.json();
+                console.log('Quizzes loaded successfully:', quizzes);
+                initTabs();
+            } catch (error) {
+                console.error('Error loading quizzes:', error);
+                document.getElementById('quiz-container').innerHTML = `
+                    <div class="empty-state">
+                        ❌ Fout bij laden van quiz<br>
+                        <small>${error.message}</small><br>
+                        <small>Zorg ervoor dat collectief-geheugen.json in dezelfde map staat</small>
+                    </div>
+                `;
+            }
+        }
+
+        function initTabs() {
+            const tabsContainer = document.getElementById('tabs');
+            quizzes.forEach((_, index) => {
+                const tab = document.createElement('button');
+                tab.className = 'tab';
+                tab.textContent = `Video ${index + 1}`;
+                tab.onclick = () => loadQuiz(index);
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        function loadQuiz(index) {
+            // Update active tab
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+
+            currentQuizIndex = index;
+            currentScore = 0;
+            answersRevealed = 0;
+            
+            renderQuiz();
+            startTimer();
+        }
+
+        function renderQuiz() {
+            const quiz = quizzes[currentQuizIndex];
+            const container = document.getElementById('quiz-container');
+
+            // Extract YouTube video ID from URL
+            const videoId = extractYouTubeId(quiz.videoUrl);
+
+            container.innerHTML = `
+                <div class="content-layout">
+                    <div class="video-container">
+                        <div class="video-wrapper">
+                            <iframe 
+                                src="https://www.youtube.com/embed/${videoId}?rel=0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="answers-section">
+                        <h2>Antwoorden (5)</h2>
+                        <div class="answers-list" id="answers-list"></div>
+                    </div>
+                </div>
+            `;
+
+            const answersList = document.getElementById('answers-list');
+            quiz.answers.forEach((answer, index) => {
+                const answerItem = document.createElement('div');
+                answerItem.className = 'answer-item';
+                answerItem.onclick = () => revealAnswer(index);
+                answerItem.innerHTML = `
+                    <div class="answer-text blurred">${answer}</div>
+                    <div class="answer-score" data-index="${index}"></div>
+                `;
+                answersList.appendChild(answerItem);
+            });
+        }
+
+        function extractYouTubeId(url) {
+            // Handle different YouTube URL formats
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : '';
+        }
+
+        function revealAnswer(index) {
+            const answerItems = document.querySelectorAll('.answer-item');
+            const answerItem = answerItems[index];
+            
+            if (answerItem.classList.contains('revealed')) return;
+
+            answersRevealed++;
+            const points = answersRevealed * 10;
+            currentScore += points;
+
+            // Reveal answer
+            const answerText = answerItem.querySelector('.answer-text');
+            answerText.classList.remove('blurred');
+            answerText.classList.add('revealed');
+            answerItem.classList.add('revealed');
+
+            // Show score
+            const scoreElement = answerItem.querySelector('.answer-score');
+            scoreElement.textContent = `+${points}`;
+            setTimeout(() => {
+                scoreElement.classList.add('show');
+            }, 100);
+        }
+
+        function startTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const seconds = (elapsed % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+        }
+
+        // Initialize
+        loadQuizzes();
+    </script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Slimste Mens - Puzzel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c94b4b 0%, #d35400 50%, #c0392b 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .tab:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .tab.active {
+            background: rgba(255,255,255,0.4);
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .puzzle-content {
+            display: none;
+        }
+
+        .puzzle-content.active {
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            font-size: 1.5em;
+            padding: 100px 20px;
+            opacity: 0.8;
+        }
+
+        .puzzle-layout {
+            display: grid;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (min-width: 1024px) and (orientation: landscape) {
+            .puzzle-layout {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .hints-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .hint-cell {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: clamp(1.1rem, 2.5vw, 2rem);
+            font-weight: bold;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            cursor: default;
+            line-height: 1.3;
+            word-break: break-word;
+            hyphens: auto;
+        }
+
+        .hint-cell.revealed {
+            font-weight: 900;
+        }
+
+        .answers-section {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .answers-section h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .answer {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.3;
+        }
+
+        .answer:hover {
+            transform: scale(1.02);
+        }
+
+        .answer.blurred {
+            filter: blur(8px);
+            user-select: none;
+        }
+
+        .answer.revealed {
+            filter: none;
+            font-weight: 800;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">00:00</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🧩 De Slimste Mens - Puzzel</h1>
+        </div>
+
+        <div class="tabs" id="tabs"></div>
+
+        <div id="puzzle-container">
+            <div class="empty-state">
+                👆 Klik op een tab om te beginnen
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let puzzles = [];
+
+        // Load puzzles from JSON file
+        async function loadPuzzles() {
+            try {
+                console.log('Attempting to load puzzles.json...');
+                const response = await fetch('puzzles.json');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                puzzles = await response.json();
+                console.log('Puzzles loaded successfully:', puzzles);
+                initTabs();
+            } catch (error) {
+                console.error('Error loading puzzles:', error);
+                document.getElementById('puzzle-container').innerHTML = `
+                    <div class="empty-state">
+                        ❌ Fout bij laden van puzzels<br>
+                        <small>${error.message}</small><br>
+                        <small>Zorg ervoor dat puzzles.json in dezelfde map staat</small>
+                    </div>
+                `;
+            }
+        }
+
+        let currentPuzzle = null;
+        let timerInterval = null;
+        let startTime = null;
+
+        function initTabs() {
+            const tabsContainer = document.getElementById('tabs');
+            puzzles.forEach((_, index) => {
+                const tab = document.createElement('button');
+                tab.className = 'tab';
+                tab.textContent = `Puzzel ${index + 1}`;
+                tab.onclick = () => loadPuzzle(index);
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        function loadPuzzle(index) {
+            // Update active tab
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+
+            currentPuzzle = index;
+            const puzzle = puzzles[index];
+            
+            // Shuffle hints
+            const allHints = [];
+            puzzle.subjects.forEach((subject, subjectIndex) => {
+                subject.hints.forEach(hint => {
+                    allHints.push({ hint, subjectIndex, color: subject.color });
+                });
+            });
+            
+            // Fisher-Yates shuffle
+            for (let i = allHints.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allHints[i], allHints[j]] = [allHints[j], allHints[i]];
+            }
+
+            // Create puzzle layout
+            const container = document.getElementById('puzzle-container');
+            container.innerHTML = `
+                <div class="puzzle-layout">
+                    <div class="hints-grid" id="hints-grid"></div>
+                    <div class="answers-section">
+                        <h2>Antwoorden</h2>
+                        <div class="answers" id="answers"></div>
+                    </div>
+                </div>
+            `;
+
+            // Populate hints grid
+            const hintsGrid = document.getElementById('hints-grid');
+            allHints.forEach(item => {
+                const cell = document.createElement('div');
+                cell.className = 'hint-cell';
+                cell.textContent = item.hint;
+                cell.dataset.subject = item.subjectIndex;
+                cell.dataset.color = item.color;
+                hintsGrid.appendChild(cell);
+            });
+
+            // Populate answers
+            const answersDiv = document.getElementById('answers');
+            puzzle.subjects.forEach((subject, index) => {
+                const answer = document.createElement('div');
+                answer.className = 'answer blurred';
+                answer.textContent = subject.answer;
+                answer.dataset.index = index;
+                answer.dataset.color = subject.color;
+                answer.onclick = () => revealAnswer(index);
+                answersDiv.appendChild(answer);
+            });
+
+            // Start timer
+            startTimer();
+        }
+
+        function revealAnswer(subjectIndex) {
+            const puzzle = puzzles[currentPuzzle];
+            const answer = document.querySelector(`.answer[data-index="${subjectIndex}"]`);
+            
+            if (answer.classList.contains('revealed')) return;
+            
+            answer.classList.remove('blurred');
+            answer.classList.add('revealed');
+            answer.style.backgroundColor = puzzle.subjects[subjectIndex].color;
+
+            // Color the hints
+            const hints = document.querySelectorAll(`.hint-cell[data-subject="${subjectIndex}"]`);
+            hints.forEach(hint => {
+                hint.classList.add('revealed');
+                hint.style.backgroundColor = hint.dataset.color;
+            });
+        }
+
+        function startTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const seconds = (elapsed % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+        }
+
+        // Initialize
+        loadPuzzles();
+    </script>
+</body>
+</html>

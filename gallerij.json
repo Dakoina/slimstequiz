@@ -1,0 +1,47 @@
+[
+    {
+        "answer": "EIFFELTOREN",
+        "images": [
+            "https://example.com/image1.jpg",
+            "https://example.com/image2.jpg",
+            "https://example.com/image3.jpg",
+            "https://example.com/image4.jpg",
+            "https://example.com/image5.jpg",
+            "https://example.com/image6.jpg",
+            "https://example.com/image7.jpg",
+            "https://example.com/image8.jpg",
+            "https://example.com/image9.jpg",
+            "https://example.com/image10.jpg"
+        ]
+    },
+    {
+        "answer": "ALBERT EINSTEIN",
+        "images": [
+            "https://example.com/einstein1.jpg",
+            "https://example.com/einstein2.jpg",
+            "https://example.com/einstein3.jpg",
+            "https://example.com/einstein4.jpg",
+            "https://example.com/einstein5.jpg",
+            "https://example.com/einstein6.jpg",
+            "https://example.com/einstein7.jpg",
+            "https://example.com/einstein8.jpg",
+            "https://example.com/einstein9.jpg",
+            "https://example.com/einstein10.jpg"
+        ]
+    },
+    {
+        "answer": "MONA LISA",
+        "images": [
+            "https://example.com/monalisa1.jpg",
+            "https://example.com/monalisa2.jpg",
+            "https://example.com/monalisa3.jpg",
+            "https://example.com/monalisa4.jpg",
+            "https://example.com/monalisa5.jpg",
+            "https://example.com/monalisa6.jpg",
+            "https://example.com/monalisa7.jpg",
+            "https://example.com/monalisa8.jpg",
+            "https://example.com/monalisa9.jpg",
+            "https://example.com/monalisa10.jpg"
+        ]
+    }
+]

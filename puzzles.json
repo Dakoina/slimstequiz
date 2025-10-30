@@ -1,0 +1,59 @@
+[
+    {
+        "subjects": [
+            {
+                "answer": "ALBERT EINSTEIN",
+                "hints": ["E=mc²", "Relativiteit", "Nobelprijs", "Tong uitsteken"],
+                "color": "#3498db"
+            },
+            {
+                "answer": "MONA LISA",
+                "hints": ["Leonardo", "Louvre", "Glimlach", "Portret"],
+                "color": "#e74c3c"
+            },
+            {
+                "answer": "RODE DUIVELS",
+                "hints": ["België", "Voetbal", "Gouden generatie", "WK 2018"],
+                "color": "#f39c12"
+            }
+        ]
+    },
+    {
+        "subjects": [
+            {
+                "answer": "HARRY POTTER",
+                "hints": ["Tovenaarsschool", "Bliksemschicht", "J.K. Rowling", "Bezem"],
+                "color": "#9b59b6"
+            },
+            {
+                "answer": "PIZZA MARGHERITA",
+                "hints": ["Italië", "Tomaat", "Mozzarella", "Basilicum"],
+                "color": "#1abc9c"
+            },
+            {
+                "answer": "EIFFELTOREN",
+                "hints": ["Parijs", "IJzer", "1889", "324 meter"],
+                "color": "#e67e22"
+            }
+        ]
+    },
+    {
+        "subjects": [
+            {
+                "answer": "JAMES BOND",
+                "hints": ["007", "Martini", "MI6", "Ian Fleming"],
+                "color": "#34495e"
+            },
+            {
+                "answer": "VAN GOGH",
+                "hints": ["Zonnebloemen", "Oor", "Sterrenacht", "Schilder"],
+                "color": "#16a085"
+            },
+            {
+                "answer": "BEATLES",
+                "hints": ["Liverpool", "Abbey Road", "Fab Four", "Hey Jude"],
+                "color": "#c0392b"
+            }
+        ]
+    }
+]

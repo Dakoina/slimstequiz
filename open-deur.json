@@ -1,0 +1,32 @@
+[
+    {
+        "image": "opendeur/hint1.jpg",
+        "subject": "de Eiffeltoren",
+        "answers": [
+            "Het is 324 meter hoog",
+            "Het staat in Parijs",
+            "Het werd gebouwd in 1889",
+            "Het was bedoeld als tijdelijk bouwwerk"
+        ]
+    },
+    {
+        "image": "https://example.com/hint2.jpg",
+        "subject": "Albert Einstein",
+        "answers": [
+            "Hij won de Nobelprijs in 1921",
+            "Zijn beroemde formule is E=mc²",
+            "Hij speelde viool",
+            "Hij werd geboren in Duitsland"
+        ]
+    },
+    {
+        "image": "https://example.com/hint3.jpg",
+        "subject": "de Mona Lisa",
+        "answers": [
+            "Het werd geschilderd door Leonardo da Vinci",
+            "Het hangt in het Louvre museum",
+            "Het werd gestolen in 1911",
+            "De vrouw heeft geen wenkbrauwen"
+        ]
+    }
+]
