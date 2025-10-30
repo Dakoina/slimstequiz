@@ -2,18 +2,18 @@
     {
         "subjects": [
             {
-                "answer": "ALBERT EINSTEIN",
-                "hints": ["E=mc²", "Relativiteit", "Nobelprijs", "Tong uitsteken"],
+                "answer": "Toverspreuk",
+                "hints": ["woorden", "kracht", "abracadabra", "effect"],
                 "color": "#3498db"
             },
             {
-                "answer": "MONA LISA",
-                "hints": ["Leonardo", "Louvre", "Glimlach", "Portret"],
+                "answer": "Pompoen",
+                "hints": ["kaars", "oranje", "glimlach", "Jack-o-lantern"],
                 "color": "#e74c3c"
             },
             {
-                "answer": "RODE DUIVELS",
-                "hints": ["België", "Voetbal", "Gouden generatie", "WK 2018"],
+                "answer": "Mummy",
+                "hints": ["Mode uit Egypte", "stijf", "ingewikkeld", "Verfilmd"],
                 "color": "#f39c12"
             }
         ]
@@ -21,18 +21,18 @@
     {
         "subjects": [
             {
-                "answer": "HARRY POTTER",
-                "hints": ["Tovenaarsschool", "Bliksemschicht", "J.K. Rowling", "Bezem"],
+                "answer": "Skelet",
+                "hints": ["Altijd op dieet", "bleek", "zit in ieder van ons", "rammelt tijdens lopen"],
                 "color": "#9b59b6"
             },
             {
-                "answer": "PIZZA MARGHERITA",
-                "hints": ["Italië", "Tomaat", "Mozzarella", "Basilicum"],
+                "answer": "Bloody Mary",
+                "hints": ["Cocktail", "Tomatensap", "Urban legend", "Zeg haar naam drie keer"],
                 "color": "#1abc9c"
             },
             {
-                "answer": "EIFFELTOREN",
-                "hints": ["Parijs", "IJzer", "1889", "324 meter"],
+                "answer": "Frankenstein",
+                "hints": ["bouten in nek", "It's alive!", "Groen huid", "monster"],
                 "color": "#e67e22"
             }
         ]
@@ -40,18 +40,18 @@
     {
         "subjects": [
             {
-                "answer": "JAMES BOND",
-                "hints": ["007", "Martini", "MI6", "Ian Fleming"],
+                "answer": "Dracula",
+                "hints": ["Adelijke titel", "Cape", "Kan niet tegen zon", "Komt uit Transsylvanië"],
                 "color": "#34495e"
             },
             {
-                "answer": "VAN GOGH",
-                "hints": ["Zonnebloemen", "Oor", "Sterrenacht", "Schilder"],
+                "answer": "Zwarte kat",
+                "hints": ["brengt ongeluk", "heks", "spint toch ", "vals"],
                 "color": "#16a085"
             },
             {
-                "answer": "BEATLES",
-                "hints": ["Liverpool", "Abbey Road", "Fab Four", "Hey Jude"],
+                "answer": "Ghostbusters",
+                "hints": ["Spoken opjagen", "slijm", "Who you gonna call?", "Protonenpack"],
                 "color": "#c0392b"
             }
         ]
