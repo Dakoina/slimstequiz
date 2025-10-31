@@ -1,32 +1,32 @@
 [
     {
-        "videoUrl": "https://youtu.be/4V90AmXnguw?si=C4VuKDtgJTKA9vMN&t=79",
+        "videoUrl": "collectief/et.mp4",
         "answers": [
-            "Michael Jackson",
-            "glove",
-            "thriller",
-            "King of Pop",
-            "zanger"
+            "Elliot",
+            "Ziek",
+            "Alien",
+            "ET Phone Home",
+            "De maan"
         ]
     },
     {
-        "videoUrl": "https://youtu.be/xKJmEC5ieOk?si=f79CIheH4JLmpvIm&t=36",
+        "videoUrl": "collectief/walkingdead.mp4",
         "answers": [
-            "Pennywise",
-            "IT",
-            "Stepken King",
-            "Derry",
-            "verfilmd"
+            "The Walking Dead",
+            "Walkers",
+            "(Hulp)sheriff",
+            "Wie sterft wordt zombie",
+            "Kruisboog (Daryl Dixon)"
         ]
     },
     {
-        "videoUrl": "https://www.youtube.com/watch?v=9bZkp7q19f0",
+        "videoUrl": "collectief/alien.mp4",
         "answers": [
-            "PSY",
-            "Gangnam Style",
-            "Korea",
-            "paardendans",
-            "viraal"
+            "Ripley",
+            "Sigourney Weaver",
+            "Facehugger",
+            "Chestburster",
+            "Aliens"
         ]
     }
 ]

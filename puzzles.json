@@ -2,18 +2,18 @@
     {
         "subjects": [
             {
-                "answer": "Toverspreuk",
-                "hints": ["woorden", "kracht", "abracadabra", "effect"],
+                "answer": "Eén nacht weerwolven",
+                "hints": ["Iedereen slaapt", "weerwolf", "één ronde", "ontmaskeren"],
                 "color": "#3498db"
             },
             {
-                "answer": "Pompoen",
-                "hints": ["kaars", "oranje", "glimlach", "Jack-o-lantern"],
+                "answer": "Priester",
+                "hints": ["Staat voor de kerk", "Voodoo", "Uitdrijving", "Preken"],
                 "color": "#e74c3c"
             },
             {
-                "answer": "Mummy",
-                "hints": ["Mode uit Egypte", "stijf", "ingewikkeld", "Verfilmd"],
+                "answer": "Thriller",
+                "hints": ["Dans", "Zombies", "Videoclip", "Hee-hee!"],
                 "color": "#f39c12"
             }
         ]
@@ -21,18 +21,18 @@
     {
         "subjects": [
             {
-                "answer": "Skelet",
-                "hints": ["Altijd op dieet", "bleek", "zit in ieder van ons", "rammelt tijdens lopen"],
+                "answer": "Koude hand",
+                "hints": ["Kippenvel", "Aanraking", "Plotseling", "Slechte bloedsomloop"],
                 "color": "#9b59b6"
             },
             {
                 "answer": "Bloody Mary",
-                "hints": ["Cocktail", "Tomatensap", "Urban legend", "Zeg haar naam drie keer"],
+                "hints": ["Cocktail", "Tomatensap", "Vodka", "Zeg haar naam 3 keer"],
                 "color": "#1abc9c"
             },
             {
-                "answer": "Frankenstein",
-                "hints": ["bouten in nek", "It's alive!", "Groen huid", "monster"],
+                "answer": "Doodskist",
+                "hints": ["Hout", "Dicht", "Onder de grond", "Eeuwige rust"],
                 "color": "#e67e22"
             }
         ]
@@ -40,18 +40,18 @@
     {
         "subjects": [
             {
-                "answer": "Dracula",
-                "hints": ["Adelijke titel", "Cape", "Kan niet tegen zon", "Komt uit Transsylvanië"],
+                "answer": "Bezem",
+                "hints": ["Heksen", "Vliegen", "Nimbus 2000", "Schoonvegen"],
                 "color": "#34495e"
             },
             {
-                "answer": "Zwarte kat",
-                "hints": ["brengt ongeluk", "heks", "spint toch ", "vals"],
+                "answer": "Zombie",
+                "hints": ["Traag", "Eigenlijk al dood", "Honger ", "Hersenen"],
                 "color": "#16a085"
             },
             {
-                "answer": "Ghostbusters",
-                "hints": ["Spoken opjagen", "slijm", "Who you gonna call?", "Protonenpack"],
+                "answer": "Bloed",
+                "hints": ["Niet voor vegetariërs", "Rood", "Vloeibaar", "Type O"],
                 "color": "#c0392b"
             }
         ]

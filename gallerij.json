@@ -1,47 +1,49 @@
 [
     {
-        "answer": "SCARY MOVIES",
+        "answer": "Films met scherpe voorwerpen",
         "images": [
-            "gallerij/gallery01/exorcist.jpg",
-            "gallerij/gallery01/friday thirteenth.webp",
-            "gallerij/gallery01/Halloween-movie-michael-myers.avif",
-            "gallerij/gallery01/Hellraiser.webp",
-            "gallerij/gallery01/it.jpg",
-            "gallerij/gallery01/jaws.webp",
-            "gallerij/gallery01/nightmare on elmstreet.jpg",
-            "gallerij/gallery01/psycho.jpg",
-            "gallerij/gallery01/scream.avif",
-            "gallerij/gallery01/silence of the lambs.jpg"            
+            "gallerij\\gallery04-knives\\rambo.webp",
+            "gallerij\\gallery04-knives\\edward scissorhands.webp",
+            "gallerij\\gallery04-knives\\saw.webp",
+            "gallerij\\gallery04-knives\\wolverine.webp",
+            "gallerij\\gallery04-knives\\blade.webp",
+            "gallerij\\gallery04-knives\\Kill bill.webp",
+            "gallerij\\gallery04-knives\\scream.webp",
+            "gallerij\\gallery04-knives\\knives out.webp",
+            "gallerij\\gallery04-knives\\pyscho.webp",
+            "gallerij\\gallery04-knives\\the barber.webp"
         ]
     },
     {
-        "answer": "FOBIEËN",
+        "answer": "Slechterikken",
         "images": [
-            "gallerij/gallery02/angst-blozen.jpg",
-            "gallerij/gallery02/angst-braken.avif",
-            "gallerij/gallery02/angst-claustrobie.jpg",
-            "gallerij/gallery02/angst-dood.webp",
-            "gallerij/gallery02/angst-hoogte.webp",
-            "gallerij/gallery02/angst-rijden.jpg",
-            "gallerij/gallery02/angst-snakes.webp",
-            "gallerij/gallery02/angst-spinnen.webp",
-            "gallerij/gallery02/angst-telefoon.jpg",
-            "gallerij/gallery02/angst-vrijdag13.gif"
+            "gallerij/gallery05-horror-personages/chucky-childs play.webp",
+            "gallerij/gallery05-horror-personages/leatherface - the texas chainsaw massacre.webp",
+            "gallerij/gallery05-horror-personages/captain hook-hook.webp",
+            "gallerij/gallery05-horror-personages/pinhead-hellraiser.webp",
+            "gallerij/gallery05-horror-personages/jason voorhees - friday the 13th.webp",
+            "gallerij/gallery05-horror-personages/lord farquaad - shrek.webp",
+            "gallerij/gallery05-horror-personages/ernst stavro blofeld - spectre (bond).webp",
+            "gallerij/gallery05-horror-personages/michael myers - halloween.webp",
+            "gallerij/gallery05-horror-personages/samara - the ring.webp",
+            "gallerij/gallery05-horror-personages/dr evil - austin powers.webp"
+ 
         ]
     },
     {
-        "answer": "SCARY ANIMALS",
+        "answer": "Messcherp",
         "images": [
-            "gallerij/gallery03/dooskwallen.jpg",
-            "gallerij/gallery03/electische-aal.jpg",
-            "gallerij/gallery03/hoornaar.jpg",
-            "gallerij/gallery03/kogelvis.jpg",
-            "gallerij/gallery03/ocotopus.jpg",
-            "gallerij/gallery03/pijlgifkikker.jpg",
-            "gallerij/gallery03/piranah.jpg",
-            "gallerij/gallery03/spin.jpg",
-            "gallerij/gallery03/Vijfstreepschorpioen.jpg",
-            "gallerij/gallery03/wolverine.jpg"
+            "gallerij/gallery06-knives-sorts/zakmes.webp",
+            "gallerij/gallery06-knives-sorts/kantoormes-cutter.webp",
+            "gallerij/gallery06-knives-sorts/aardappel-schilmes.webp",
+            "gallerij/gallery06-knives-sorts/chefmes-koksmes.webp",
+            "gallerij/gallery06-knives-sorts/hakmes-cleaver-chineeskoksmes.webp",
+            "gallerij/gallery06-knives-sorts/steakmes.webp",
+            "gallerij/gallery06-knives-sorts/fileermes.webp",
+            "gallerij/gallery06-knives-sorts/broodmes.webp",
+            "gallerij/gallery06-knives-sorts/hobbymes-scalpel.webp",
+            "gallerij/gallery06-knives-sorts/survival mes.webp",
+            "gallerij/gallery06-knives-sorts/multitool.webp"
         ]
     }
 ]

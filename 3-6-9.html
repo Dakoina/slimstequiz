@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Slimste Mens - 3-6-9 Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c94b4b 0%, #d35400 50%, #c0392b 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.home {
+            background: rgba(0,0,0,0.3);
+        }
+
+        .timer {
+            background: rgba(0,0,0,0.3);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.8em;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .question-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .question-content {
+            background: rgba(0,0,0,0.2);
+            padding: 60px 80px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .question-text {
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .welcome-message {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            opacity: 0.9;
+        }
+
+        .end-message {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: bold;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .nav-arrow {
+            position: absolute;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 3em;
+            padding: 20px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .nav-arrow.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255,255,255,0.35);
+            transform: scale(1.1);
+        }
+
+        .nav-arrow.left {
+            left: 20px;
+        }
+
+        .nav-arrow.right {
+            right: 20px;
+        }
+
+        .numbers-bar {
+            background: rgba(0,0,0,0.2);
+            padding: 25px 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: clamp(10px, 2vw, 25px);
+            flex-wrap: wrap;
+        }
+
+        .number-item {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: bold;
+            padding: 15px;
+            min-width: clamp(50px, 5vw, 70px);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .number-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .number-item.multiple-of-three {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: #f39c12;
+            transform: translateY(-8px);
+        }
+
+        .number-item.current {
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 0 0 4px rgba(255,255,255,0.4);
+            border-radius: 50%;
+        }
+
+        .number-item.current.multiple-of-three {
+            box-shadow: 0 0 0 5px #f39c12;
+        }
+
+        @media (max-width: 768px) {
+            .question-content {
+                padding: 40px 30px;
+            }
+
+            .nav-arrow {
+                font-size: 2em;
+                padding: 15px 20px;
+            }
+
+            .numbers-bar {
+                padding: 20px 10px;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🎯 3-6-9 Quiz</h1>
+        
+        <div class="top-bar">
+            <div class="control-buttons">
+                <button class="btn home" onclick="window.location.href='index.html'">🏠 Home</button>
+                <button class="btn" id="startBtn" onclick="toggleQuiz()">Start</button>
+            </div>
+            <div class="timer" id="timer">00:00</div>
+        </div>
+
+        <div class="question-area">
+            <button class="nav-arrow left" id="prevBtn" onclick="previousQuestion()">◀</button>
+            
+            <div class="question-content">
+                <div class="welcome-message" id="questionDisplay">
+                    Klik op "Start" om te beginnen 🎯
+                </div>
+            </div>
+
+            <button class="nav-arrow right" id="nextBtn" onclick="nextQuestion()">▶</button>
+        </div>
+
+        <div class="numbers-bar" id="numbersBar"></div>
+    </div>
+
+    <script>
+        let questions = [];
+        let currentQuestionIndex = -1;
+        let quizStarted = false;
+        let timerInterval = null;
+        let startTime = null;
+
+        // Load questions from JSON file
+        async function loadQuestions() {
+            try {
+                console.log('Attempting to load 3-6-9.json...');
+                const response = await fetch('3-6-9.json');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                questions = await response.json();
+                console.log('Questions loaded successfully:', questions);
+                initNumbersBar();
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                document.getElementById('questionDisplay').innerHTML = `
+                    ❌ Fout bij laden van vragen<br>
+                    <small style="font-size: 0.6em;">${error.message}</small>
+                `;
+            }
+        }
+
+        function initNumbersBar() {
+            const numbersBar = document.getElementById('numbersBar');
+            numbersBar.innerHTML = '';
+
+            questions.forEach((_, index) => {
+                const number = index + 1;
+                const numberItem = document.createElement('div');
+                numberItem.className = 'number-item';
+                
+                if (number % 3 === 0) {
+                    numberItem.classList.add('multiple-of-three');
+                }
+                
+                numberItem.textContent = number;
+                numberItem.onclick = () => goToQuestion(index);
+                numbersBar.appendChild(numberItem);
+            });
+        }
+
+        function toggleQuiz() {
+            if (!quizStarted) {
+                startQuiz();
+            } else {
+                resetQuiz();
+            }
+        }
+
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestionIndex = 0;
+            document.getElementById('startBtn').textContent = 'Reset';
+            showQuestion();
+            updateNavigationButtons();
+        }
+
+        function resetQuiz() {
+            quizStarted = false;
+            currentQuestionIndex = -1;
+            document.getElementById('startBtn').textContent = 'Start';
+            document.getElementById('questionDisplay').innerHTML = 'Klik op "Start" om te beginnen 🎯';
+            document.getElementById('questionDisplay').className = 'welcome-message';
+            stopTimer();
+            document.getElementById('timer').textContent = '00:00';
+            
+            // Remove all current highlights
+            document.querySelectorAll('.number-item').forEach(item => {
+                item.classList.remove('current');
+            });
+
+            // Hide navigation arrows
+            document.getElementById('prevBtn').classList.remove('active');
+            document.getElementById('nextBtn').classList.remove('active');
+        }
+
+        function showQuestion() {
+            const questionDisplay = document.getElementById('questionDisplay');
+            
+            if (currentQuestionIndex >= questions.length) {
+                questionDisplay.innerHTML = '🏁 Einde';
+                questionDisplay.className = 'end-message';
+                stopTimer();
+                document.getElementById('nextBtn').classList.remove('active');
+            } else {
+                questionDisplay.textContent = questions[currentQuestionIndex];
+                questionDisplay.className = 'question-text';
+                startTimer();
+            }
+
+            updateNumberHighlight();
+            updateNavigationButtons();
+        }
+
+        function updateNumberHighlight() {
+            const numberItems = document.querySelectorAll('.number-item');
+            numberItems.forEach((item, index) => {
+                item.classList.toggle('current', index === currentQuestionIndex);
+            });
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (quizStarted) {
+                prevBtn.classList.toggle('active', currentQuestionIndex > 0);
+                nextBtn.classList.toggle('active', currentQuestionIndex < questions.length);
+            } else {
+                prevBtn.classList.remove('active');
+                nextBtn.classList.remove('active');
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                currentQuestionIndex++;
+                showQuestion();
+            }
+        }
+
+        function goToQuestion(index) {
+            if (quizStarted && index < questions.length) {
+                currentQuestionIndex = index;
+                showQuestion();
+            }
+        }
+
+        function startTimer() {
+            stopTimer();
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const seconds = (elapsed % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+        }
+
+        // Initialize
+        loadQuestions();
+    </script>
+</body>
+</html>

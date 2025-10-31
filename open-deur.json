@@ -1,32 +1,32 @@
 [
     {
-        "image": "opendeur/hint1.jpg",
-        "subject": "Wat weet je over Assepoester",
+        "image": "opendeur/04/bassie.jpg",
+        "subject": "Wat weet je over de \"Saw\" films?",
         "answers": [
-            "Pompoen",
-            "Het staat in Parijs",
-            "Het werd gebouwd in 1889",
-            "Het was bedoeld als tijdelijk bouwwerk"
+            "Jigsaw",
+            "Let's play a game",
+            "Billy the Puppet",
+            "Valstrikken"
         ]
     },
     {
-        "image": "opendeur/hint2.jpg",
-        "subject": "Wat zijn de belangrijkste ingrediënten van een pompoentaart, behalve pompoen?",
+        "image": "opendeur/05/mardigras.webp",
+        "subject": "Wat weet je over voodoo?",
         "answers": [
-            "Suiker",
-            "Eieren",
-            "Pompoenkruiden",
-            "Room / melk"
+            "Bezeten",
+            "Poppetjes",
+            "Vloek",
+            "New Orleans"
         ]
     },
     {
-        "image": "opendeur/hint3.webp",
-        "subject": "Wat weet je over The Addams Family",
+        "image": "opendeur/06/pooh.avif",
+        "subject": "Wat weet je \"HET\"?",
         "answers": [
-            "Hand",
-            "Wednesday",
-            "Netflix serie",
-            "Uncle Fester"
+            "Pennywise",
+            "Stephen King",
+            "Rode ballon",
+            "27-jarige cyclus"
         ]
     }
 ]

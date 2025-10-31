@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +36,7 @@
 
         h1 {
             font-size: clamp(2rem, 5vw, 3.5rem);
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
             margin-bottom: 15px;
         }
 
@@ -53,14 +54,14 @@
         }
 
         .quiz-card {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 20px;
             padding: 40px 30px;
             text-align: center;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             text-decoration: none;
             color: white;
             display: flex;
@@ -79,16 +80,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
             opacity: 0;
             transition: opacity 0.4s;
         }
 
         .quiz-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            background: rgba(255,255,255,0.25);
-            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .quiz-card:hover::before {
@@ -99,7 +100,7 @@
             font-size: 4rem;
             margin-bottom: 20px;
             display: block;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
             transition: transform 0.4s;
         }
 
@@ -138,14 +139,28 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
-            <h1>🧠 De Slimste Mens</h1>
-            <p class="subtitle">Kies je quiz ronde</p>
+            <h1>🧠 De Halloweenste Mens </h1>
+            <p class="subtitle">Kies je quiz ronde quizmaster!</p>
         </div>
 
         <div class="quiz-grid">
+
+            <a href="3-6-9.html" class="quiz-card">
+                <span class="quiz-icon">🔢</span>
+                <div class="quiz-title">3-6-9</div>
+                <div class="quiz-description">Elke 3de vraag scoort punten</div>
+            </a>
+
+            <a href="open-deur.html" class="quiz-card">
+                <span class="quiz-icon">🚪</span>
+                <div class="quiz-title">Open Deur</div>
+                <div class="quiz-description">Beantwoord vragen over de getoonde hints</div>
+            </a>
+
             <a href="puzzel.html" class="quiz-card">
                 <span class="quiz-icon">🧩</span>
                 <div class="quiz-title">Puzzel</div>
@@ -158,11 +173,6 @@
                 <div class="quiz-description">Raad het antwoord aan de hand van afbeeldingen</div>
             </a>
 
-            <a href="open-deur.html" class="quiz-card">
-                <span class="quiz-icon">🚪</span>
-                <div class="quiz-title">Open Deur</div>
-                <div class="quiz-description">Beantwoord vragen over de getoonde hints</div>
-            </a>
 
             <a href="collectief-geheugen.html" class="quiz-card">
                 <span class="quiz-icon">🎵</span>
@@ -176,4 +186,5 @@
         </div>
     </div>
 </body>
+
 </html>
