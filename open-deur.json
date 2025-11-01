@@ -1,7 +1,7 @@
 [
     {
         "image": "opendeur/04/bassie.jpg",
-        "subject": "Wat weet je over de \"Saw\" films?",
+        "subject": "Wat weet je over de \"Saw\" films",
         "answers": [
             "Jigsaw",
             "Let's play a game",
@@ -11,7 +11,7 @@
     },
     {
         "image": "opendeur/05/mardigras.webp",
-        "subject": "Wat weet je over voodoo?",
+        "subject": "Wat weet je over voodoo",
         "answers": [
             "Bezeten",
             "Poppetjes",
@@ -21,7 +21,7 @@
     },
     {
         "image": "opendeur/06/pooh.avif",
-        "subject": "Wat weet je \"HET\"?",
+        "subject": "Wat weet je over \"HET\"",
         "answers": [
             "Pennywise",
             "Stephen King",

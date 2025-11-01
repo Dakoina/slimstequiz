@@ -8,7 +8,7 @@
             },
             {
                 "answer": "Priester",
-                "hints": ["Staat voor de kerk", "Voodoo", "Uitdrijving", "Preken"],
+                "hints": ["Staat voor de kerk", "Voodoo", "Uitdrijving", "Houdt van jongetjes"],
                 "color": "#e74c3c"
             },
             {
@@ -51,7 +51,26 @@
             },
             {
                 "answer": "Bloed",
-                "hints": ["Niet voor vegetariërs", "Rood", "Vloeibaar", "Type O"],
+                "hints": ["Niet voor vegetariërs", "Rood", "Vloeibaar", "Transportmiddel"],
+                "color": "#c0392b"
+            }
+        ]
+    },
+    {
+        "subjects": [
+            {
+                "answer": "Wolf",
+                "hints": ["Wallstreet", "Groot & Boos", "W", "α"],
+                "color": "#34495e"
+            },
+            {
+                "answer": "Uitroepen",
+                "hints": ["Ah!", "Ha!", "Iek! ", "Oe!"],
+                "color": "#16a085"
+            },
+            {
+                "answer": "Bloed types",
+                "hints": ["A", "B", "AB", "O"],
                 "color": "#c0392b"
             }
         ]

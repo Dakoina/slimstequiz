@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Slimste Mens - Ingelijst</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c94b4b 0%, #d35400 50%, #c0392b 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-home {
+            background: rgba(0,0,0,0.3);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-home:hover {
+            background: rgba(0,0,0,0.5);
+            transform: translateY(-2px);
+        }
+
+        .timer {
+            background: rgba(0,0,0,0.3);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.8em;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .tab:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .tab.active {
+            background: rgba(255,255,255,0.4);
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .list-content {
+            display: none;
+        }
+
+        .list-content.active {
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            font-size: 1.5em;
+            padding: 100px 20px;
+            opacity: 0.8;
+        }
+
+        .question-section {
+            background: rgba(0,0,0,0.2);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .question-text {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .items-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .items-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .items-column {
+            background: rgba(0,0,0,0.2);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .item {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .item:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateX(5px);
+        }
+
+        .item.revealed {
+            background: rgba(46, 204, 113, 0.4);
+            cursor: default;
+        }
+
+        .item.revealed:hover {
+            transform: none;
+        }
+
+        .item-number {
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-weight: bold;
+            min-width: 40px;
+            color: #f39c12;
+        }
+
+        .item-content {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .item-content.blurred {
+            filter: blur(8px);
+            user-select: none;
+        }
+
+        .item-content.revealed {
+            filter: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 De Slimste Mens - Ingelijst</h1>
+        </div>
+
+        <div class="top-controls">
+            <a href="index.html" class="btn-home">🏠 Home</a>
+            <div class="timer" id="timer">00:00</div>
+        </div>
+
+        <div class="tabs" id="tabs"></div>
+
+        <div id="list-container">
+            <div class="empty-state">
+                👆 Klik op een lijst om te beginnen
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let lists = [];
+        let currentListIndex = null;
+        let timerInterval = null;
+        let startTime = null;
+
+        // Load lists from JSON file
+        async function loadLists() {
+            try {
+                console.log('Attempting to load ingelijst.json...');
+                const response = await fetch('ingelijst.json');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                lists = await response.json();
+                console.log('Lists loaded successfully:', lists);
+                initTabs();
+            } catch (error) {
+                console.error('Error loading lists:', error);
+                document.getElementById('list-container').innerHTML = `
+                    <div class="empty-state">
+                        ❌ Fout bij laden van lijsten<br>
+                        <small>${error.message}</small><br>
+                        <small>Zorg ervoor dat ingelijst.json in dezelfde map staat</small>
+                    </div>
+                `;
+            }
+        }
+
+        function initTabs() {
+            const tabsContainer = document.getElementById('tabs');
+            lists.forEach((_, index) => {
+                const tab = document.createElement('button');
+                tab.className = 'tab';
+                tab.textContent = `Lijst ${index + 1}`;
+                tab.onclick = () => loadList(index);
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        function loadList(index) {
+            // Update active tab
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+
+            currentListIndex = index;
+            renderList();
+            startTimer();
+        }
+
+        function renderList() {
+            const list = lists[currentListIndex];
+            const container = document.getElementById('list-container');
+
+            // Split items into two columns
+            const midpoint = Math.ceil(list.items.length / 2);
+            const column1Items = list.items.slice(0, midpoint);
+            const column2Items = list.items.slice(midpoint);
+
+            container.innerHTML = `
+                <div class="question-section">
+                    <div class="question-text">${list.question}</div>
+                </div>
+                <div class="items-container">
+                    <div class="items-column" id="column1"></div>
+                    <div class="items-column" id="column2"></div>
+                </div>
+            `;
+
+            renderColumn('column1', column1Items, 0);
+            renderColumn('column2', column2Items, midpoint);
+        }
+
+        function renderColumn(columnId, items, startIndex) {
+            const column = document.getElementById(columnId);
+            
+            items.forEach((itemText, index) => {
+                const itemNumber = startIndex + index + 1;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.onclick = () => revealItem(itemDiv);
+                
+                itemDiv.innerHTML = `
+                    <div class="item-number">${itemNumber}</div>
+                    <div class="item-content blurred">${itemText}</div>
+                `;
+                
+                column.appendChild(itemDiv);
+            });
+        }
+
+        function revealItem(itemElement) {
+            if (itemElement.classList.contains('revealed')) return;
+            
+            const contentElement = itemElement.querySelector('.item-content');
+            contentElement.classList.remove('blurred');
+            contentElement.classList.add('revealed');
+            itemElement.classList.add('revealed');
+        }
+
+        function startTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const seconds = (elapsed % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+        }
+
+        // Initialize
+        loadLists();
+    </script>
+</body>
+</html>
